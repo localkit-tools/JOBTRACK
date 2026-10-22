@@ -77,6 +77,7 @@ function updateStatistics() {
 
 function renderApplications() {
   const applications = getApplications();
+  updateStatistics();
   const searchTerm = (searchInput?.value || "").toLowerCase().trim();
   const selectedStatus = statusFilter?.value || "all";
 
