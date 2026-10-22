@@ -209,6 +209,10 @@ jobForm?.addEventListener("submit", function (event) {
 searchInput?.addEventListener("input", renderApplications);
 statusFilter?.addEventListener("change", renderApplications);
 
+// Export applications
+document.getElementById("exportButton")
+  ?.addEventListener("click", exportApplicationsCSV);
+
 // Show saved applications when the page opens
 renderApplications();
 // Edit an existing application
