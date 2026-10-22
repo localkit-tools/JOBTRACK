@@ -1,14 +1,830 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#6d4aff">
-  <meta name="description" content="JobTrack by LocalKit Studio — manage your job applications in one place.">
+  <meta name="description" content="Manage your job applications with JobTrack by LocalKit Studio.">
   <title>JobTrack | LocalKit Studio</title>
+
+  <style>
+    :root {
+      --purple: #6d4aff;
+      --purple-dark: #5135d9;
+      --purple-light: #f1edff;
+      --bg: #f7f7fc;
+      --text: #24233a;
+      --muted: #85849a;
+      --border: #ecebf3;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    button, input, select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app {
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      position: fixed;
+      inset: 0 auto 0 0;
+      width: 245px;
+      padding: 28px 18px;
+      background: var(--white);
+      border-right: 1px solid var(--border);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 0 10px;
+      margin-bottom: 42px;
+    }
+
+    .brand-icon {
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 13px;
+      color: white;
+      background: var(--purple);
+      font-size: 21px;
+      font-weight: 800;
+    }
+
+    .brand-name {
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: -0.8px;
+    }
+
+    .brand-caption {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .nav-label {
+      padding: 0 12px;
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.3px;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 14px;
+      margin-bottom: 6px;
+      border-radius: 10px;
+      color: #77758e;
+      font-size: 13px;
+      text-decoration: none;
+    }
+
+    .nav-link.active {
+      background: var(--purple-light);
+      color: var(--purple-dark);
+      font-weight: 700;
+    }
+
+    .nav-icon {
+      width: 20px;
+      text-align: center;
+      font-size: 17px;
+    }
+
+    .sidebar-note {
+      position: absolute;
+      right: 18px;
+      bottom: 24px;
+      left: 18px;
+      padding: 15px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: #faf9ff;
+    }
+
+    .sidebar-note strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 12px;
+    }
+
+    .sidebar-note p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    .main {
+      max-width: 1700px;
+      margin-left: 245px;
+      padding: 32px 38px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 34px;
+    }
+
+    .eyebrow {
+      margin-bottom: 8px;
+      color: var(--purple);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(25px, 3vw, 32px);
+      letter-spacing: -1.2px;
+    }
+
+    .subtitle {
+      margin: 9px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .primary-btn {
+      padding: 12px 17px;
+      border: 0;
+      border-radius: 10px;
+      background: var(--purple);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: 0 5px 14px #6d4aff26;
+    }
+
+    .primary-btn:hover {
+      background: var(--purple-dark);
+    }
+
+    .section-title {
+      margin: 0 0 17px;
+      font-size: 16px;
+      font-weight: 750;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 17px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      padding: 21px;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: var(--white);
+    }
+
+    .stat-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .stat-icon {
+      display: grid;
+      place-items: center;
+      width: 37px;
+      height: 37px;
+      border-radius: 11px;
+      background: var(--purple-light);
+      color: var(--purple);
+      font-size: 18px;
+    }
+
+    .stat-value {
+      margin-top: 19px;
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .stat-caption {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(230px, 1fr);
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    .panel {
+      min-width: 0;
+      padding: 23px;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: var(--white);
+    }
+
+    .panel-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .panel-heading h2 {
+      margin: 0;
+      font-size: 15px;
+    }
+
+    .panel-heading span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .chart {
+      display: flex;
+      align-items: end;
+      justify-content: space-around;
+      gap: 12px;
+      height: 165px;
+      padding-top: 12px;
+      border-bottom: 1px solid var(--border);
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 40px,
+        #f0eff7 41px,
+        transparent 42px
+      );
+    }
+
+    .bar-group {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      align-items: center;
+      justify-content: end;
+      height: 100%;
+      gap: 9px;
+    }
+
+    .bar {
+      width: min(30px, 75%);
+      min-height: 5px;
+      border-radius: 6px 6px 2px 2px;
+      background: #b8aaff;
+    }
+
+    .bar.current {
+      background: var(--purple);
+    }
+
+    .bar-label {
+      padding-bottom: 9px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .pipeline {
+      display: flex;
+      flex-direction: column;
+      gap: 21px;
+    }
+
+    .pipeline-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 12px;
+    }
+
+    .pipeline-label {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--purple);
+    }
+
+    .dot.blue { background: #5597ff; }
+    .dot.orange { background: #f5a64a; }
+    .dot.green { background: #32bd91; }
+
+    .pipeline-count {
+      font-weight: 800;
+    }
+
+    .progress-track {
+      height: 6px;
+      margin-top: 10px;
+      overflow: hidden;
+      border-radius: 10px;
+      background: #f0eff7;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: var(--purple);
+    }
+
+    .table-panel {
+      padding: 23px;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: var(--white);
+    }
+
+    .table-tools {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .search-box, .filter-box {
+      min-width: 0;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      outline: none;
+      background: white;
+      color: var(--text);
+      font-size: 12px;
+    }
+
+    .search-box:focus, .filter-box:focus {
+      border-color: var(--purple);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    th {
+      padding: 13px 12px;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    td {
+      padding: 16px 12px;
+      border-bottom: 1px solid #f2f1f7;
+      font-size: 12px;
+    }
+
+    .company {
+      font-weight: 700;
+    }
+
+    .job-title {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 6px 9px;
+      border-radius: 20px;
+      background: #f1edff;
+      color: #6845e8;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .status.interview {
+      background: #e9f2ff;
+      color: #3274cf;
+    }
+
+    .status.rejected {
+      background: #fff0ed;
+      color: #d65e4a;
+    }
+
+    .status.offer {
+      background: #e6faf1;
+      color: #16855e;
+    }
+
+    .empty-state {
+      padding: 30px 12px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .footer {
+      padding: 25px 0 5px;
+      color: var(--muted);
+      font-size: 11px;
+      text-align: center;
+    }
+
+    @media (max-width: 1100px) {
+      .sidebar {
+        width: 205px;
+      }
+
+      .main {
+        margin-left: 205px;
+        padding: 28px 22px;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .sidebar {
+        position: static;
+        width: 100%;
+        padding: 17px;
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .brand {
+        margin-bottom: 18px;
+      }
+
+      .nav-label, .sidebar-note {
+        display: none;
+      }
+
+      .nav-menu {
+        display: flex;
+        gap: 5px;
+        overflow-x: auto;
+      }
+
+      .nav-link {
+        flex: 0 0 auto;
+        padding: 10px;
+        margin: 0;
+        font-size: 11px;
+      }
+
+      .main {
+        margin-left: 0;
+        padding: 25px 15px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 26px;
+      }
+
+      .stats {
+        gap: 10px;
+      }
+
+      .stat-card {
+        padding: 15px;
+      }
+
+      .stat-value {
+        font-size: 25px;
+      }
+
+      .panel, .table-panel {
+        padding: 16px;
+      }
+
+      .table-tools {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .search-box, .filter-box {
+        width: 100%;
+      }
+
+      .panel-heading {
+        align-items: flex-start;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <h1>JobTrack</h1>
-  <p>Your job search, organized.</p>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">J</div>
+        <div>
+          <div class="brand-name">JobTrack</div>
+          <div class="brand-caption">by LocalKit Studio</div>
+        </div>
+      </div>
+
+      <div class="nav-label">WORKSPACE</div>
+      <nav class="nav-menu">
+        <a class="nav-link active" href="#dashboard">
+          <span class="nav-icon">▦</span> Dashboard
+        </a>
+        <a class="nav-link" href="#applications">
+          <span class="nav-icon">▤</span> Applications
+        </a>
+        <a class="nav-link" href="#insights">
+          <span class="nav-icon">◷</span> Insights
+        </a>
+      </nav>
+
+      <div class="sidebar-note">
+        <strong>Your next opportunity starts here.</strong>
+        <p>Keep your applications organized and your job search moving forward.</p>
+      </div>
+    </aside>
+
+    <main class="main" id="dashboard">
+      <header class="topbar">
+        <div>
+          <div class="eyebrow">YOUR CAREER WORKSPACE</div>
+          <h1>Good to see you!</h1>
+          <p class="subtitle">
+            Here's an overview of your job search progress.
+          </p>
+        </div>
+        <button class="primary-btn" id="addJobButton">
+          + Add Application
+        </button>
+      </header>
+
+      <section aria-labelledby="overviewTitle">
+        <h2 class="section-title" id="overviewTitle">Overview</h2>
+
+        <div class="stats">
+          <article class="stat-card">
+            <div class="stat-top">
+              Total Applications
+              <span class="stat-icon">▤</span>
+            </div>
+            <div class="stat-value" id="totalCount">12</div>
+            <div class="stat-caption">Applications tracked</div>
+          </article>
+
+          <article class="stat-card">
+            <div class="stat-top">
+              Interviews
+              <span class="stat-icon">♧</span>
+            </div>
+            <div class="stat-value" id="interviewCount">3</div>
+            <div class="stat-caption">Interview-stage applications</div>
+          </article>
+
+          <article class="stat-card">
+            <div class="stat-top">
+              Offers
+              <span class="stat-icon">✦</span>
+            </div>
+            <div class="stat-value" id="offerCount">1</div>
+            <div class="stat-caption">Offers received</div>
+          </article>
+
+          <article class="stat-card">
+            <div class="stat-top">
+              Response Rate
+              <span class="stat-icon">↗</span>
+            </div>
+            <div class="stat-value" id="responseRate">33%</div>
+            <div class="stat-caption">Applications with a response</div>
+          </article>
+        </div>
+      </section>
+
+      <section class="dashboard-grid" id="insights">
+        <article class="panel">
+          <div class="panel-heading">
+            <h2>Application Activity</h2>
+            <span>Illustrative preview</span>
+          </div>
+
+          <div class="chart" aria-label="Illustrative application activity chart">
+            <div class="bar-group">
+              <div class="bar" style="height: 35%"></div>
+              <span class="bar-label">Mon</span>
+            </div>
+            <div class="bar-group">
+              <div class="bar" style="height: 57%"></div>
+              <span class="bar-label">Tue</span>
+            </div>
+            <div class="bar-group">
+              <div class="bar" style="height: 43%"></div>
+              <span class="bar-label">Wed</span>
+            </div>
+            <div class="bar-group">
+              <div class="bar current" style="height: 82%"></div>
+              <span class="bar-label">Thu</span>
+            </div>
+            <div class="bar-group">
+              <div class="bar" style="height: 62%"></div>
+              <span class="bar-label">Fri</span>
+            </div>
+            <div class="bar-group">
+              <div class="bar" style="height: 30%"></div>
+              <span class="bar-label">Sat</span>
+            </div>
+            <div class="bar-group">
+              <div class="bar" style="height: 46%"></div>
+              <span class="bar-label">Sun</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading">
+            <h2>Application Pipeline</h2>
+            <span>Sample data</span>
+          </div>
+
+          <div class="pipeline">
+            <div>
+              <div class="pipeline-row">
+                <span class="pipeline-label">
+                  <span class="dot"></span> Applied
+                </span>
+                <span class="pipeline-count">6</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: 50%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="pipeline-row">
+                <span class="pipeline-label">
+                  <span class="dot blue"></span> Interview
+                </span>
+                <span class="pipeline-count">3</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: 25%; background: #5597ff"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="pipeline-row">
+                <span class="pipeline-label">
+                  <span class="dot green"></span> Offer
+                </span>
+                <span class="pipeline-count">1</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: 9%; background: #32bd91"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="pipeline-row">
+                <span class="pipeline-label">
+                  <span class="dot orange"></span> Rejected
+                </span>
+                <span class="pipeline-count">2</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: 17%; background: #f5a64a"></div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="table-panel" id="applications">
+        <div class="panel-heading">
+          <div>
+            <h2>Recent Applications</h2>
+            <p class="subtitle">Your latest job opportunities in one place.</p>
+          </div>
+        </div>
+
+        <div class="table-tools" style="margin-bottom: 18px">
+          <input
+            class="search-box"
+            id="searchInput"
+            type="search"
+            placeholder="Search jobs or companies..."
+            aria-label="Search applications"
+          >
+
+          <select class="filter-box" id="statusFilter" aria-label="Filter by status">
+            <option value="all">All statuses</option>
+            <option value="Applied">Applied</option>
+            <option value="Interview">Interview</option>
+            <option value="Offer">Offer</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>COMPANY / ROLE</th>
+                <th>DATE APPLIED</th>
+                <th>STATUS</th>
+              </tr>
+            </thead>
+            <tbody id="applicationRows">
+              <tr>
+                <td>
+                  <div class="company">Microsoft</div>
+                  <div class="job-title">Software Engineer</div>
+                </td>
+                <td>20 Oct 2026</td>
+                <td><span class="status interview">Interview</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="company">Google</div>
+                  <div class="job-title">Data Analyst</div>
+                </td>
+                <td>18 Oct 2026</td>
+                <td><span class="status">Applied</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="company">Adobe</div>
+                  <div class="job-title">Frontend Developer</div>
+                </td>
+                <td>15 Oct 2026</td>
+                <td><span class="status offer">Offer</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="company">Amazon</div>
+                  <div class="job-title">Business Analyst</div>
+                </td>
+                <td>12 Oct 2026</td>
+                <td><span class="status rejected">Rejected</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <footer class="footer">
+        JobTrack by LocalKit Studio · Your career, organized.
+      </footer>
+    </main>
+  </div>
 </body>
 </html>
