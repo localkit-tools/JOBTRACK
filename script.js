@@ -118,7 +118,17 @@ function renderApplications() {
           <span class="status ${escapeHTML(statusClass)}">
             ${escapeHTML(app.status || "Applied")}
           </span>
+          <div style="margin-top: 8px; display: flex; gap: 6px;">
+            <button type="button" onclick="editApplication('${escapeHTML(app.id)}')">
+              Edit
+            </button>
+            <button type="button" onclick="deleteApplication('${escapeHTML(app.id)}')">
+              Delete
+            </button>
+          </div>
         </td>
+
+       
       </tr>`;
   }).join("");
 }
@@ -164,10 +174,28 @@ jobForm?.addEventListener("submit", function (event) {
     notes: String(formData.get("notes") || "").trim()
   };
 
-  const applications = getApplications();
-  applications.unshift(application);
+   const applications = getApplications();
+  const editingId = jobForm.dataset.editingId;
+
+  if (editingId) {
+    const index = applications.findIndex(
+      item => item.id === editingId
+    );
+
+    if (index !== -1) {
+      applications[index] = {
+        ...applications[index],
+        ...application,
+        id: editingId
+      };
+    }
+  } else {
+    applications.unshift(application);
+  }
 
   if (!saveApplications(applications)) return;
+
+  delete jobForm.dataset.editingId;
 
   renderApplications();
   alert("Application saved successfully!");
@@ -183,3 +211,43 @@ statusFilter?.addEventListener("change", renderApplications);
 
 // Show saved applications when the page opens
 renderApplications();
+// Edit an existing application
+function editApplication(id) {
+  const applications = getApplications();
+  const app = applications.find(item => item.id === id);
+
+  if (!app) {
+    alert("Application not found.");
+    return;
+  }
+
+  jobFormPanel.hidden = false;
+
+  jobForm.elements.jobTitle.value = app.jobTitle;
+  jobForm.elements.company.value = app.company;
+  jobForm.elements.applicationDate.value = app.applicationDate;
+  jobForm.elements.status.value = app.status;
+  jobForm.elements.jobLink.value = app.jobLink;
+  jobForm.elements.notes.value = app.notes;
+
+  jobForm.dataset.editingId = id;
+  jobForm.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+// Delete an application
+function deleteApplication(id) {
+  if (!confirm("Are you sure you want to delete this application?")) {
+    return;
+  }
+
+  const applications = getApplications();
+  const updatedApplications = applications.filter(
+    item => item.id !== id
+  );
+
+  if (saveApplications(updatedApplications)) {
+    renderApplications();
+    alert("Application deleted successfully.");
+  }
+}
+
