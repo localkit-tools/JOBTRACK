@@ -607,6 +607,71 @@
         <button class="primary-btn" id="addJobButton">
           + Add Application
         </button>
+
+<div id="jobFormPanel" class="panel" hidden style="margin-bottom: 24px;">
+  <div class="panel-heading">
+    <h2>Add a New Application</h2>
+    <button type="button" id="closeJobForm" class="primary-btn">
+      Cancel
+    </button>
+  </div>
+
+  <form id="jobForm">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+
+      <label>
+        Job Title
+        <input class="search-box" name="jobTitle" type="text"
+          placeholder="e.g. Data Analyst" required style="width: 100%; margin-top: 8px;">
+      </label>
+
+      <label>
+        Company
+        <input class="search-box" name="company" type="text"
+          placeholder="e.g. Microsoft" required style="width: 100%; margin-top: 8px;">
+      </label>
+
+      <label>
+        Application Date
+        <input class="search-box" name="applicationDate" type="date"
+          required style="width: 100%; margin-top: 8px;">
+      </label>
+
+      <label>
+        Status
+        <select class="filter-box" name="status"
+          required style="width: 100%; margin-top: 8px;">
+          <option value="Applied">Applied</option>
+          <option value="Interview">Interview</option>
+          <option value="Offer">Offer</option>
+          <option value="Rejected">Rejected</option>
+        </select>
+      </label>
+
+      <label>
+        Job Link (optional)
+        <input class="search-box" name="jobLink" type="url"
+          placeholder="https://example.com/job"
+          style="width: 100%; margin-top: 8px;">
+      </label>
+
+      <label>
+        Notes (optional)
+        <input class="search-box" name="notes" type="text"
+          placeholder="Interview details or reminders"
+          style="width: 100%; margin-top: 8px;">
+      </label>
+
+    </div>
+
+    <button class="primary-btn" type="submit" style="margin-top: 20px;">
+      Save Application
+    </button>
+  </form>
+</div>
+
+
+        
       </header>
 
       <section aria-labelledby="overviewTitle">
