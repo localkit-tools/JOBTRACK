@@ -251,3 +251,62 @@ function deleteApplication(id) {
   }
 }
 
+// Export saved applications to CSV
+function exportApplicationsCSV() {
+  const applications = getApplications();
+
+  if (applications.length === 0) {
+    alert("There are no applications to export.");
+    return;
+  }
+
+  const headers = [
+    "Job Title",
+    "Company",
+    "Application Date",
+    "Status",
+    "Job Link",
+    "Notes"
+  ];
+
+  function escapeCSV(value) {
+    let text = String(value ?? "");
+
+    // Prevent spreadsheet formula injection
+    if (/^[\s]*[=+\-@]/.test(text)) {
+      text = "'" + text;
+    }
+
+    return '"' + text.replace(/"/g, '""') + '"';
+  }
+
+  const rows = applications.map(app => [
+    app.jobTitle,
+    app.company,
+    app.applicationDate,
+    app.status,
+    app.jobLink,
+    app.notes
+  ]);
+
+  const csvContent = [headers, ...rows]
+    .map(row => row.map(escapeCSV).join(","))
+    .join("\r\n");
+
+  const blob = new Blob(
+    ["\uFEFF" + csvContent],
+    { type: "text/csv;charset=utf-8;" }
+  );
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = "jobtrack-applications.csv";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+
+  URL.revokeObjectURL(url);
+}
+
