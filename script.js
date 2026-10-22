@@ -43,6 +43,38 @@ function escapeHTML(value) {
   });
 }
 
+function updateStatistics() {
+  const applications = getApplications();
+
+  const total = applications.length;
+  const interviews = applications.filter(
+    app => app.status === "Interview"
+  ).length;
+  const offers = applications.filter(
+    app => app.status === "Offer"
+  ).length;
+  const responses = applications.filter(
+    app => ["Interview", "Offer", "Rejected"].includes(app.status)
+  ).length;
+
+  const totalElement = document.getElementById("totalCount");
+  const interviewElement = document.getElementById("interviewCount");
+  const offerElement = document.getElementById("offerCount");
+  const responseElement = document.getElementById("responseRate");
+
+  if (totalElement) totalElement.textContent = total;
+  if (interviewElement) interviewElement.textContent = interviews;
+  if (offerElement) offerElement.textContent = offers;
+
+  const responseRate = total === 0
+    ? 0
+    : Math.round((responses / total) * 100);
+
+  if (responseElement) {
+    responseElement.textContent = responseRate + "%";
+  }
+}
+
 function renderApplications() {
   const applications = getApplications();
   const searchTerm = (searchInput?.value || "").toLowerCase().trim();
