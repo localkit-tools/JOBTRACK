@@ -213,6 +213,120 @@ statusFilter?.addEventListener("change", renderApplications);
 document.getElementById("exportButton")
   ?.addEventListener("click", exportApplicationsCSV);
 
+// Import applications from CSV
+document.getElementById("importButton")
+  ?.addEventListener("click", function () {
+    document.getElementById("importFile")?.click();
+  });
+
+document.getElementById("importFile")
+  ?.addEventListener("change", async function (event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    try {
+      const text = await file.text();
+      const lines = text.replace(/^\uFEFF/, "").split(/\r?\n/);
+
+      function parseCSVLine(line) {
+        const values = [];
+        let value = "";
+        let inQuotes = false;
+
+        for (let i = 0; i < line.length; i++) {
+          const char = line[i];
+
+          if (char === '"') {
+            if (inQuotes && line[i + 1] === '"') {
+              value += '"';
+              i++;
+            } else {
+              inQuotes = !inQuotes;
+            }
+          } else if (char === "," && !inQuotes) {
+            values.push(value);
+            value = "";
+          } else {
+            value += char;
+          }
+        }
+
+        values.push(value);
+        return values;
+      }
+
+      const nonEmptyLines = lines.filter(line => line.trim() !== "");
+      if (nonEmptyLines.length < 2) {
+        alert("The CSV file contains no application rows.");
+        return;
+      }
+
+      const headers = parseCSVLine(nonEmptyLines[0])
+        .map(header => header.trim().toLowerCase());
+
+      const requiredHeaders = [
+        "job title",
+        "company",
+        "application date",
+        "status",
+        "job link",
+        "notes"
+      ];
+
+      if (!requiredHeaders.every(header => headers.includes(header))) {
+        alert("This CSV does not have the expected JobTrack columns.");
+        return;
+      }
+
+      const existing = getApplications();
+      const imported = [];
+
+      for (const line of nonEmptyLines.slice(1)) {
+        const values = parseCSVLine(line);
+        const row = {};
+
+        headers.forEach((header, index) => {
+          row[header] = values[index] ?? "";
+        });
+
+        if (!row["job title"].trim() || !row["company"].trim()) {
+          continue;
+        }
+
+        imported.push({
+          id: (Date.now() + imported.length).toString(),
+          jobTitle: row["job title"].trim(),
+          company: row["company"].trim(),
+          applicationDate: row["application date"].trim(),
+          status: row["status"].trim() || "Applied",
+          jobLink: row["job link"].trim(),
+          notes: row["notes"].trim()
+        });
+      }
+
+      if (imported.length === 0) {
+        alert("No valid applications were found in this CSV.");
+        return;
+      }
+
+      if (!confirm(
+        `Import ${imported.length} applications? Existing applications will be kept.`
+      )) {
+        return;
+      }
+
+      if (saveApplications([...existing, ...imported])) {
+        renderApplications();
+        alert(`${imported.length} applications imported successfully.`);
+      }
+    } catch (error) {
+      console.error("CSV import failed:", error);
+      alert("Could not read this CSV file.");
+    } finally {
+      event.target.value = "";
+    }
+  });
+
 // Show saved applications when the page opens
 renderApplications();
 // Edit an existing application
