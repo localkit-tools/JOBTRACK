@@ -280,6 +280,16 @@ document.getElementById("importFile")
 
       const existing = getApplications();
       const imported = [];
+      const existingKeys = new Set(
+  existing.map(app =>
+    [
+      app.jobTitle,
+      app.company,
+      app.applicationDate,
+      app.status
+    ].map(value => String(value || "").trim().toLowerCase()).join("|")
+  )
+);
 
       for (const line of nonEmptyLines.slice(1)) {
         const values = parseCSVLine(line);
@@ -292,7 +302,19 @@ document.getElementById("importFile")
         if (!row["job title"].trim() || !row["company"].trim()) {
           continue;
         }
+const duplicateKey = [
+  row["job title"],
+  row["company"],
+  row["application date"],
+  row["status"] || "Applied"
+].map(value => String(value || "").trim().toLowerCase()).join("|");
 
+if (existingKeys.has(duplicateKey)) {
+  continue;
+}
+
+existingKeys.add(duplicateKey);
+        
         imported.push({
           id: (Date.now() + imported.length).toString(),
           jobTitle: row["job title"].trim(),
