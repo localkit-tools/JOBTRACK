@@ -326,10 +326,10 @@ existingKeys.add(duplicateKey);
         });
       }
 
-      if (imported.length === 0) {
-        alert("No valid applications were found in this CSV.");
-        return;
-      }
+     if (imported.length === 0) {
+  alert("No new applications to import. These applications may already exist in JobTrack.");
+  return;
+}
 
       if (!confirm(
         `Import ${imported.length} applications? Existing applications will be kept.`
