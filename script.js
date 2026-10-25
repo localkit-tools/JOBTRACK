@@ -109,11 +109,67 @@ function updatePipeline() {
 }
 
 
+function updateActivityChart() {
+  const applications = getApplications();
+  const today = new Date();
+
+  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const counts = [];
+
+  for (let i = 6; i >= 0; i--) {
+    const date = new Date(today);
+    date.setHours(0, 0, 0, 0);
+    date.setDate(today.getDate() - i);
+
+    const dateKey =
+      date.getFullYear() + "-" +
+      String(date.getMonth() + 1).padStart(2, "0") + "-" +
+      String(date.getDate()).padStart(2, "0");
+
+    const count = applications.filter(function (app) {
+      return app.applicationDate === dateKey;
+    }).length;
+
+    counts.push({
+      label: dayNames[date.getDay()],
+      count: count
+    });
+  }
+
+  const maxCount = Math.max(1, ...counts.map(function (item) {
+    return item.count;
+  }));
+
+  counts.forEach(function (item, index) {
+    const bar = document.getElementById("activityBar" + index);
+    const label = document.getElementById("activityLabel" + index);
+
+    const height = item.count === 0
+      ? 0
+      : Math.max(8, Math.round((item.count / maxCount) * 100));
+
+    if (bar) {
+      bar.style.height = height + "%";
+      bar.title = item.count + " application(s)";
+      bar.classList.toggle(
+        "current",
+        index === 6
+      );
+    }
+
+    if (label) {
+      label.textContent = item.label;
+    }
+  });
+}
+
 
 function renderApplications() {
   const applications = getApplications();
   updateStatistics();
   updatePipeline();
+updateActivityChart();
+  
   const searchTerm = (searchInput?.value || "").toLowerCase().trim();
   const selectedStatus = statusFilter?.value || "all";
 
