@@ -775,55 +775,60 @@
             <span>Sample data</span>
           </div>
 
-          <div class="pipeline">
-            <div>
-              <div class="pipeline-row">
-                <span class="pipeline-label">
-                  <span class="dot"></span> Applied
-                </span>
-                <span class="pipeline-count">6</span>
-              </div>
-              <div class="progress-track">
-                <div class="progress-fill" style="width: 50%"></div>
-              </div>
-            </div>
 
-            <div>
-              <div class="pipeline-row">
-                <span class="pipeline-label">
-                  <span class="dot blue"></span> Interview
-                </span>
-                <span class="pipeline-count">3</span>
-              </div>
-              <div class="progress-track">
-                <div class="progress-fill" style="width: 25%; background: #5597ff"></div>
-              </div>
-            </div>
+<div class="pipeline">
+  <div>
+    <div class="pipeline-row">
+      <span class="pipeline-label">
+        <span class="dot"></span> Applied
+      </span>
+      <span class="pipeline-count" id="pipelineApplied">0</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="barApplied" style="width: 0%"></div>
+    </div>
+  </div>
 
-            <div>
-              <div class="pipeline-row">
-                <span class="pipeline-label">
-                  <span class="dot green"></span> Offer
-                </span>
-                <span class="pipeline-count">1</span>
-              </div>
-              <div class="progress-track">
-                <div class="progress-fill" style="width: 9%; background: #32bd91"></div>
-              </div>
-            </div>
+  <div>
+    <div class="pipeline-row">
+      <span class="pipeline-label">
+        <span class="dot blue"></span> Interview
+      </span>
+      <span class="pipeline-count" id="pipelineInterview">0</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="barInterview" style="width: 0%; background: #5597ff"></div>
+    </div>
+  </div>
 
-            <div>
-              <div class="pipeline-row">
-                <span class="pipeline-label">
-                  <span class="dot orange"></span> Rejected
-                </span>
-                <span class="pipeline-count">2</span>
-              </div>
-              <div class="progress-track">
-                <div class="progress-fill" style="width: 17%; background: #f5a64a"></div>
-              </div>
-            </div>
-          </div>
+  <div>
+    <div class="pipeline-row">
+      <span class="pipeline-label">
+        <span class="dot green"></span> Offer
+      </span>
+      <span class="pipeline-count" id="pipelineOffer">0</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="barOffer" style="width: 0%; background: #32bd91"></div>
+    </div>
+  </div>
+
+  <div>
+    <div class="pipeline-row">
+      <span class="pipeline-label">
+        <span class="dot orange"></span> Rejected
+      </span>
+      <span class="pipeline-count" id="pipelineRejected">0</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="barRejected" style="width: 0%; background: #f5a64a"></div>
+    </div>
+  </div>
+</div>
+
+
+
+          
         </article>
       </section>
 
