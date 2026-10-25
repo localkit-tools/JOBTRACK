@@ -144,10 +144,9 @@ function updateActivityChart() {
     const bar = document.getElementById("activityBar" + index);
     const label = document.getElementById("activityLabel" + index);
 
-    const height = item.count === 0
-      ? 0
-      : Math.max(8, Math.round((item.count / maxCount) * 100));
-
+   const height = item.count === 0
+  ? 0
+  : Math.max(8, Math.round((item.count / maxCount) * 100));
     if (bar) {
       bar.style.height = height + "%";
       bar.title = item.count + " application(s)";
