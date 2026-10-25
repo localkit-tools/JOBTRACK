@@ -75,6 +75,41 @@ function updateStatistics() {
   }
 }
 
+function updatePipeline() {
+  const applications = getApplications();
+  const total = applications.length;
+
+  const statuses = [
+    { status: "Applied", countId: "pipelineApplied", barId: "barApplied" },
+    { status: "Interview", countId: "pipelineInterview", barId: "barInterview" },
+    { status: "Offer", countId: "pipelineOffer", barId: "barOffer" },
+    { status: "Rejected", countId: "pipelineRejected", barId: "barRejected" }
+  ];
+
+  statuses.forEach(function (item) {
+    const count = applications.filter(function (app) {
+      return app.status === item.status;
+    }).length;
+
+    const countElement = document.getElementById(item.countId);
+    const barElement = document.getElementById(item.barId);
+
+    const percentage = total === 0
+      ? 0
+      : Math.round((count / total) * 100);
+
+    if (countElement) {
+      countElement.textContent = count;
+    }
+
+    if (barElement) {
+      barElement.style.width = percentage + "%";
+    }
+  });
+}
+
+
+
 function renderApplications() {
   const applications = getApplications();
   updateStatistics();
