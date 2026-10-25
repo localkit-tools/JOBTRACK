@@ -143,6 +143,8 @@ function updateActivityChart() {
   counts.forEach(function (item, index) {
     const bar = document.getElementById("activityBar" + index);
     const label = document.getElementById("activityLabel" + index);
+    const countLabel = document.getElementById("activityCount" + index);
+if (countLabel) countLabel.textContent = item.count;
 
    const height = item.count === 0
   ? 0
