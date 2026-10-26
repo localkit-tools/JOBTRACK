@@ -588,6 +588,7 @@ function updateFollowUpReminders() {
     return;
   }
 
+ 
   reminderList.innerHTML = reminders.map(app => {
     let message;
 
@@ -606,10 +607,13 @@ function updateFollowUpReminders() {
         <div style="margin-top: 6px; font-size: 13px;">
           ${escapeHTML(app.followUpDate)} · ${escapeHTML(message)}
         </div>
+        <button
+          type="button"
+          style="margin-top: 10px;"
+          onclick="editApplication('${escapeHTML(app.id)}')">
+          Edit Reminder
+        </button>
       </div>`;
   }).join("");
-}
-
-
 
 
