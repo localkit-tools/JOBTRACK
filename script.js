@@ -171,6 +171,7 @@ function renderApplications() {
   updateStatistics();
   updatePipeline();
 updateActivityChart();
+    updateFollowUpReminders();
   
   const searchTerm = (searchInput?.value || "").toLowerCase().trim();
   const selectedStatus = statusFilter?.value || "all";
@@ -547,4 +548,65 @@ function exportApplicationsCSV() {
 
   URL.revokeObjectURL(url);
 }
+
+
+function updateFollowUpReminders() {
+  const applications = getApplications();
+  const reminderList = document.getElementById("followUpList");
+  const reminderCount = document.getElementById("followUpCount");
+
+  if (!reminderList || !reminderCount) return;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const reminders = applications
+    .filter(app =>
+      app.followUpDate &&
+      app.status !== "Offer" &&
+      app.status !== "Rejected"
+    )
+    .map(app => {
+      const date = new Date(app.followUpDate + "T00:00:00");
+      const daysAway = Math.round(
+        (date - today) / (1000 * 60 * 60 * 24)
+      );
+
+      return { ...app, daysAway };
+    })
+    .sort((a, b) => a.daysAway - b.daysAway);
+
+  reminderCount.textContent =
+    reminders.length + (reminders.length === 1 ? " reminder" : " reminders");
+
+  if (reminders.length === 0) {
+    reminderList.innerHTML =
+      '<p class="subtitle">No follow-up reminders yet. Add a follow-up date when saving an application.</p>';
+    return;
+  }
+
+  reminderList.innerHTML = reminders.map(app => {
+    let message;
+
+    if (app.daysAway < 0) {
+      message = "Overdue by " + Math.abs(app.daysAway) + " day(s)";
+    } else if (app.daysAway === 0) {
+      message = "Due today";
+    } else {
+      message = "Due in " + app.daysAway + " day(s)";
+    }
+
+    return `
+      <div style="padding: 12px 0; border-bottom: 1px solid var(--border, #eee);">
+        <strong>${escapeHTML(app.company)}</strong>
+        <div class="subtitle">${escapeHTML(app.jobTitle)}</div>
+        <div style="margin-top: 6px; font-size: 13px;">
+          ${escapeHTML(app.followUpDate)} · ${escapeHTML(message)}
+        </div>
+      </div>`;
+  }).join("");
+}
+
+
+
 
