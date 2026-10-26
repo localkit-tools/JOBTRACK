@@ -557,6 +557,8 @@ function updateFollowUpReminders() {
   const applications = getApplications();
   const reminderList = document.getElementById("followUpList");
   const reminderCount = document.getElementById("followUpCount");
+    const overdueCount = document.getElementById("overdueReminderCount");
+  const upcomingCount = document.getElementById("upcomingReminderCount");
 
   if (!reminderList || !reminderCount) return;
 
@@ -581,6 +583,12 @@ function updateFollowUpReminders() {
 
   reminderCount.textContent =
     reminders.length + (reminders.length === 1 ? " reminder" : " reminders");
+  const overdue = reminders.filter(app => app.daysAway < 0).length;
+  const upcoming = reminders.filter(app => app.daysAway >= 0).length;
+
+  if (overdueCount) overdueCount.textContent = overdue;
+  if (upcomingCount) upcomingCount.textContent = upcoming;
+  
 
   if (reminders.length === 0) {
     reminderList.innerHTML =
