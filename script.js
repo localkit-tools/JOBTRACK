@@ -615,5 +615,5 @@ function updateFollowUpReminders() {
         </button>
       </div>`;
   }).join("");
-
+}
 
