@@ -258,15 +258,18 @@ jobForm?.addEventListener("submit", function (event) {
 
   const formData = new FormData(jobForm);
 
-  const application = {
+ 
+const application = {
     id: Date.now().toString(),
     jobTitle: String(formData.get("jobTitle") || "").trim(),
     company: String(formData.get("company") || "").trim(),
     applicationDate: String(formData.get("applicationDate") || ""),
+    followUpDate: String(formData.get("followUpDate") || ""),
     status: String(formData.get("status") || "Applied"),
     jobLink: String(formData.get("jobLink") || "").trim(),
     notes: String(formData.get("notes") || "").trim()
   };
+
 
    const applications = getApplications();
   const editingId = jobForm.dataset.editingId;
