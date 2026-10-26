@@ -420,6 +420,7 @@ existingKeys.add(duplicateKey);
           jobTitle: row["job title"].trim(),
           company: row["company"].trim(),
           applicationDate: row["application date"].trim(),
+          followUpDate: (row["follow-up date"] || "").trim(),
           status: row["status"].trim() || "Applied",
           jobLink: row["job link"].trim(),
           notes: row["notes"].trim()
