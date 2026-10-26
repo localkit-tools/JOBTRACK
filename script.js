@@ -201,7 +201,25 @@ updateActivityChart();
 
   applicationRows.innerHTML = filtered.map(function (app) {
     const statusClass = (app.status || "").toLowerCase();
+    let priority = "Low";
 
+    if (app.followUpDate) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const followUp = new Date(app.followUpDate + "T00:00:00");
+      const daysAway = Math.round(
+        (followUp - today) / (1000 * 60 * 60 * 24)
+      );
+
+      if (app.status !== "Offer" && app.status !== "Rejected") {
+        if (daysAway <= 0) {
+          priority = "High";
+        } else if (daysAway <= 3) {
+          priority = "Medium";
+        }
+      }
+    }
     return `
       <tr>
         <td>
@@ -222,9 +240,11 @@ updateActivityChart();
             </button>
           </div>
         </td>
-
-       
+        <td>
+          <span class="status">${priority}</span>
+        </td>
       </tr>`;
+       
   }).join("");
 }
 
