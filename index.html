@@ -864,10 +864,24 @@
             <h2>Follow-up Reminders</h2>
             <p class="subtitle">Keep track of companies you need to follow up with.</p>
           </div>
+         
           <span id="followUpCount">0 reminders</span>
         </div>
 
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 16px 0;">
+          <div style="padding: 14px; border-radius: 12px; background: var(--bg, #f7f7fb);">
+            <div class="subtitle">Overdue Reminders</div>
+            <strong id="overdueReminderCount" style="font-size: 24px;">0</strong>
+          </div>
+
+          <div style="padding: 14px; border-radius: 12px; background: var(--bg, #f7f7fb);">
+            <div class="subtitle">Upcoming Reminders</div>
+            <strong id="upcomingReminderCount" style="font-size: 24px;">0</strong>
+          </div>
+        </div>
+
         <div id="followUpList">
+
           <p class="subtitle">No follow-up reminders yet. Add a follow-up date when saving an application.</p>
         </div>
       </section>
