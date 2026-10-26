@@ -463,6 +463,7 @@ function editApplication(id) {
   jobForm.elements.jobTitle.value = app.jobTitle;
   jobForm.elements.company.value = app.company;
   jobForm.elements.applicationDate.value = app.applicationDate;
+  jobForm.elements.followUpDate.value = app.followUpDate || "";
   jobForm.elements.status.value = app.status;
   jobForm.elements.jobLink.value = app.jobLink;
   jobForm.elements.notes.value = app.notes;
