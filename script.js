@@ -362,15 +362,17 @@ document.getElementById("importFile")
       const headers = parseCSVLine(nonEmptyLines[0])
         .map(header => header.trim().toLowerCase());
 
-      const requiredHeaders = [
-        "job title",
-        "company",
-        "application date",
-        "status",
-        "job link",
-        "notes"
-      ];
+    
+const requiredHeaders = [
+  "job title",
+  "company",
+  "application date",
+  "status",
+  "job link",
+  "notes"
+];
 
+      
       if (!requiredHeaders.every(header => headers.includes(header))) {
         alert("This CSV does not have the expected JobTrack columns.");
         return;
@@ -503,11 +505,11 @@ function exportApplicationsCSV() {
     "Job Title",
     "Company",
     "Application Date",
+    "Follow-up Date",
     "Status",
     "Job Link",
     "Notes"
   ];
-
   function escapeCSV(value) {
     let text = String(value ?? "");
 
@@ -519,15 +521,15 @@ function exportApplicationsCSV() {
     return '"' + text.replace(/"/g, '""') + '"';
   }
 
-  const rows = applications.map(app => [
+   const rows = applications.map(app => [
     app.jobTitle,
     app.company,
     app.applicationDate,
+    app.followUpDate || "",
     app.status,
     app.jobLink,
     app.notes
   ]);
-
   const csvContent = [headers, ...rows]
     .map(row => row.map(escapeCSV).join(","))
     .join("\r\n");
