@@ -125,10 +125,11 @@ function updateActivityChart() {
       date.getFullYear() + "-" +
       String(date.getMonth() + 1).padStart(2, "0") + "-" +
       String(date.getDate()).padStart(2, "0");
-
+    
     const count = applications.filter(function (app) {
-      return app.applicationDate === dateKey;
-    }).length;
+  const savedDate = String(app.applicationDate || "").slice(0, 10);
+  return savedDate === dateKey;
+}).length;
 
     counts.push({
       label: dayNames[date.getDay()],
