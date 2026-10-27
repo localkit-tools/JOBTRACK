@@ -227,10 +227,18 @@ updateActivityChart();
           <div class="job-title">${escapeHTML(app.jobTitle)}</div>
         </td>
         <td>${escapeHTML(app.applicationDate || "")}</td>
+
         <td>
-          <span class="status ${escapeHTML(statusClass)}">
-            ${escapeHTML(app.status || "Applied")}
-          </span>
+          <select
+            aria-label="Update status for ${escapeHTML(app.company)}"
+            onchange="updateApplicationStatus('${escapeHTML(app.id)}', this.value)"
+          >
+            <option value="Applied" ${app.status === "Applied" ? "selected" : ""}>Applied</option>
+            <option value="Interview" ${app.status === "Interview" ? "selected" : ""}>Interview</option>
+            <option value="Offer" ${app.status === "Offer" ? "selected" : ""}>Offer</option>
+            <option value="Rejected" ${app.status === "Rejected" ? "selected" : ""}>Rejected</option>
+          </select>
+
           <div style="margin-top: 8px; display: flex; gap: 6px;">
             <button type="button" onclick="editApplication('${escapeHTML(app.id)}')">
               Edit
@@ -240,6 +248,8 @@ updateActivityChart();
             </button>
           </div>
         </td>
+
+       
         <td>
           <span class="status">${priority}</span>
         </td>
