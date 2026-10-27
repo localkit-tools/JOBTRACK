@@ -506,6 +506,37 @@ function editApplication(id) {
   jobForm.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
+// Quickly update an application's status
+function updateApplicationStatus(id, newStatus) {
+  const allowedStatuses = ["Applied", "Interview", "Offer", "Rejected"];
+
+  if (!allowedStatuses.includes(newStatus)) {
+    alert("Invalid application status.");
+    renderApplications();
+    return;
+  }
+
+  const applications = getApplications();
+  const app = applications.find(item => item.id === id);
+
+  if (!app) {
+    alert("Application not found.");
+    renderApplications();
+    return;
+  }
+
+  app.status = newStatus;
+
+  if (saveApplications(applications)) {
+    renderApplications();
+  } else {
+    renderApplications();
+    alert("Status could not be saved. Please try again.");
+  }
+}
+
+
+
 // Delete an application
 function deleteApplication(id) {
   if (!confirm("Are you sure you want to delete this application?")) {
