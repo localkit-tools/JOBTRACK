@@ -70,10 +70,6 @@ function updateStatistics() {
     ? 0
     : Math.round((responses / total) * 100);
 
-  if (responseElement) {
-    responseElement.textContent = responseRate + "%";
-  }
-}
 
   if (responseElement) {
     responseElement.textContent = responseRate + "%";
