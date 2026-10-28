@@ -75,6 +75,81 @@ function updateStatistics() {
   }
 }
 
+  if (responseElement) {
+    responseElement.textContent = responseRate + "%";
+  }
+}
+
+function updateSuccessInsights() {
+  const applications = getApplications();
+  const total = applications.length;
+
+  const interviewCount = applications.filter(
+    app => app.status === "Interview"
+  ).length;
+
+  const offerCount = applications.filter(
+    app => app.status === "Offer"
+  ).length;
+
+  const rejectionCount = applications.filter(
+    app => app.status === "Rejected"
+  ).length;
+
+  const interviewRate = total === 0
+    ? 0
+    : Math.round((interviewCount / total) * 100);
+
+  const offerRate = total === 0
+    ? 0
+    : Math.round((offerCount / total) * 100);
+
+  const rejectionRate = total === 0
+    ? 0
+    : Math.round((rejectionCount / total) * 100);
+
+  const interviewRateElement =
+    document.getElementById("analyticsInterviewRate");
+  const offerRateElement =
+    document.getElementById("analyticsOfferRate");
+  const rejectionRateElement =
+    document.getElementById("analyticsRejectionRate");
+
+  const interviewBar =
+    document.getElementById("analyticsInterviewBar");
+  const offerBar =
+    document.getElementById("analyticsOfferBar");
+  const rejectionBar =
+    document.getElementById("analyticsRejectionBar");
+
+  if (interviewRateElement) {
+    interviewRateElement.textContent = interviewRate + "%";
+  }
+
+  if (offerRateElement) {
+    offerRateElement.textContent = offerRate + "%";
+  }
+
+  if (rejectionRateElement) {
+    rejectionRateElement.textContent = rejectionRate + "%";
+  }
+
+  if (interviewBar) {
+    interviewBar.style.width = interviewRate + "%";
+  }
+
+  if (offerBar) {
+    offerBar.style.width = offerRate + "%";
+  }
+
+  if (rejectionBar) {
+    rejectionBar.style.width = rejectionRate + "%";
+  }
+}
+
+function updatePipeline() {
+
+
 function updatePipeline() {
   const applications = getApplications();
   const total = applications.length;
