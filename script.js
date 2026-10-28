@@ -289,7 +289,7 @@ jobForm?.addEventListener("submit", function (event) {
 
   const formData = new FormData(jobForm);
 
- 
+alert("Status selected in form: " + jobForm.elements.status.value); 
 const application = {
     id: Date.now().toString(),
     jobTitle: String(formData.get("jobTitle") || "").trim(),
