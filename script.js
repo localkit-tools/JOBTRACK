@@ -144,9 +144,6 @@ function updateSuccessInsights() {
 }
 
 function updatePipeline() {
-
-
-function updatePipeline() {
   const applications = getApplications();
   const total = applications.length;
 
