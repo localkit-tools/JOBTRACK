@@ -261,7 +261,7 @@ updateActivityChart();
   if (filtered.length === 0) {
     applicationRows.innerHTML = `
       <tr>
-        <td colspan="3" style="text-align:center; padding:24px;">
+        <td colspan="4" style="text-align:center; padding:24px;">
           No saved applications found.
         </td>
       </tr>`;
@@ -308,7 +308,8 @@ updateActivityChart();
             <option value="Rejected" ${app.status === "Rejected" ? "selected" : ""}>Rejected</option>
           </select>
 
-          <div style="margin-top: 8px; display: flex; gap: 6px;">
+                 <td>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
             <button type="button" onclick="editApplication('${escapeHTML(app.id)}')">
               Edit
             </button>
@@ -316,6 +317,7 @@ updateActivityChart();
               Delete
             </button>
           </div>
+        </td>
         </td>
 
        
