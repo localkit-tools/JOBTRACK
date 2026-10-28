@@ -221,11 +221,13 @@ if (countLabel) countLabel.textContent = item.count;
     if (bar) {
       bar.style.height = height + "%";
       bar.title = item.count + " application(s)";
+     
       bar.classList.toggle(
-        "current",
-        index === 6
-      );
+  "current",
+  index === 6
+);
     }
+  
 
     if (label) {
       label.textContent = item.label;
