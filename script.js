@@ -169,6 +169,7 @@ if (countLabel) countLabel.textContent = item.count;
 function renderApplications() {
   const applications = getApplications();
   updateStatistics();
+    updateSuccessInsights();
   updatePipeline();
 updateActivityChart();
     updateFollowUpReminders();
