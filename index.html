@@ -858,6 +858,57 @@
       
       </section>
 
+   
+<section class="table-panel" id="successInsights" style="margin-bottom: 24px;">
+  <div class="panel-heading">
+    <div>
+      <h2>Application Success Insights</h2>
+      <p class="subtitle">Understand how your job search is progressing.</p>
+    </div>
+    <span>Live data</span>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 18px;">
+    <div style="padding: 16px; border: 1px solid var(--border); border-radius: 12px;">
+      <div class="pipeline-row">
+        <span class="pipeline-label">Interview Rate</span>
+        <strong class="pipeline-count" id="analyticsInterviewRate">0%</strong>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="analyticsInterviewBar" style="width: 0%; background: #5597ff"></div>
+      </div>
+      <p class="subtitle">Applications currently at interview stage.</p>
+    </div>
+
+    <div style="padding: 16px; border: 1px solid var(--border); border-radius: 12px;">
+      <div class="pipeline-row">
+        <span class="pipeline-label">Offer Rate</span>
+        <strong class="pipeline-count" id="analyticsOfferRate">0%</strong>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="analyticsOfferBar" style="width: 0%; background: #32bd91"></div>
+      </div>
+      <p class="subtitle">Applications that resulted in an offer.</p>
+    </div>
+
+    <div style="padding: 16px; border: 1px solid var(--border); border-radius: 12px;">
+      <div class="pipeline-row">
+        <span class="pipeline-label">Rejection Rate</span>
+        <strong class="pipeline-count" id="analyticsRejectionRate">0%</strong>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="analyticsRejectionBar" style="width: 0%; background: #f5a64a"></div>
+      </div>
+      <p class="subtitle">Applications currently marked rejected.</p>
+    </div>
+  </div>
+
+  <p class="subtitle" style="margin-top: 14px;">
+    Rates use your total saved applications as the denominator. They describe current statuses, not final outcomes.
+  </p>
+</section>
+
+      
       <section class="table-panel" id="followUpReminders" style="margin-bottom: 24px;">
         <div class="panel-heading">
           <div>
