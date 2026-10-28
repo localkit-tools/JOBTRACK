@@ -760,4 +760,5 @@ function updateFollowUpReminders() {
       </div>`;
   }).join("");
 }
-
+// Initialize the dashboard when the page loads
+renderApplications();
