@@ -425,6 +425,106 @@
       font-weight: 700;
     }
 
+    
+/* Premium Recent Applications Table */
+
+.table-wrap {
+  overflow-x: auto;
+  border-radius: 14px;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  text-align: left;
+  white-space: nowrap;
+}
+
+th {
+  padding: 16px 14px;
+  background: #faf9ff;
+  letter-spacing: 0.4px;
+}
+
+td {
+  padding: 18px 14px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  vertical-align: middle;
+}
+
+tbody tr {
+  transition: background 0.2s ease;
+}
+
+tbody tr:hover {
+  background: #faf9ff;
+}
+
+.table-wrap select {
+  min-width: 105px;
+  padding: 9px 28px 9px 11px;
+  border: 1px solid #e3ddff;
+  border-radius: 9px;
+  background: #f8f6ff;
+  color: var(--purple-dark);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+}
+
+.table-wrap select:focus {
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(109, 74, 255, 0.12);
+}
+
+.table-wrap button {
+  padding: 8px 13px;
+  border: 1px solid #e5e1f5;
+  border-radius: 8px;
+  background: white;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.table-wrap button:hover {
+  border-color: var(--purple);
+  color: var(--purple);
+  background: var(--purple-light);
+}
+
+.table-wrap button[onclick^="deleteApplication"] {
+  color: #dc4b5b;
+  border-color: #f5dadd;
+}
+
+.table-wrap button[onclick^="deleteApplication"]:hover {
+  background: #fff0f1;
+  border-color: #dc4b5b;
+}
+
+.table-wrap button[onclick^="editApplication"]:hover {
+  background: var(--purple-light);
+  border-color: var(--purple);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  padding: 7px 12px;
+  border-radius: 20px;
+  background: var(--purple-light);
+  color: var(--purple);
+  font-size: 11px;
+  font-weight: 700;
+}
+
     td {
       padding: 16px 12px;
       border-bottom: 1px solid #f2f1f7;
