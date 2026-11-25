@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JobTrack — Your Career, Organized</title>
+<meta name="description" content="Take control of your job search. Track applications, manage interviews and never miss a career opportunity with JobTrack.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --purple:#7047eb;
+  --purple-dark:#5732cc;
+  --ink:#201b35;
+  --muted:#77738c;
+  --bg:#faf9ff;
+  --border:#eeebf5;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;color:var(--ink);background:white}
+a{text-decoration:none;color:inherit}
+button{font:inherit}
+.nav{height:78px;display:flex;align-items:center;justify-content:space-between;max-width:1180px;padding:0 24px;margin:auto}
+.logo{display:flex;align-items:center;gap:10px;font-family:Manrope,sans-serif;font-size:22px;font-weight:800;letter-spacing:-1px}
+.logo-icon{width:36px;height:36px;border-radius:12px;background:var(--purple);color:white;display:grid;place-items:center;font-size:20px}
+.nav-links{display:flex;gap:34px;color:#69657c;font-size:14px;font-weight:600}
+.nav-links a:hover{color:var(--purple)}
+.nav-actions{display:flex;align-items:center;gap:20px;font-size:14px;font-weight:700}
+.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:10px;padding:13px 21px;font-weight:700;font-size:14px;transition:.2s}
+.btn-primary{background:var(--purple);color:white;box-shadow:0 8px 20px #7047eb30}
+.btn-primary:hover{background:var(--purple-dark);transform:translateY(-2px)}
+.btn-light{background:#f2efff;color:var(--purple)}
+.hero{background:radial-gradient(ellipse at 50% 0%,#eee8ff 0%,#faf9ff 48%,white 78%);padding:82px 24px 76px;text-align:center;overflow:hidden}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:white;border:1px solid #e9e1ff;color:var(--purple);border-radius:30px;padding:8px 14px;font-size:12px;font-weight:700;letter-spacing:.3px}
+.dot{width:7px;height:7px;border-radius:50%;background:#8d6bff}
+h1{font-family:Manrope,sans-serif;font-size:clamp(42px,6vw,70px);line-height:1.08;letter-spacing:-3px;max-width:850px;margin:25px auto 20px;font-weight:800}
+.gradient{background:linear-gradient(100deg,#7047eb,#a36af5);background-clip:text;-webkit-background-clip:text;color:transparent}
+.hero-copy{font-size:17px;line-height:1.8;color:var(--muted);max-width:620px;margin:0 auto}
+.hero-buttons{display:flex;gap:13px;justify-content:center;margin:30px 0 18px;flex-wrap:wrap}
+.hero-note{font-size:12px;color:#918da0}
+.preview-wrap{max-width:1000px;margin:55px auto 0;position:relative}
+.preview-glow{position:absolute;inset:20% 5% -10%;background:#9c7bff40;filter:blur(70px);z-index:0}
+.dashboard-preview{position:relative;z-index:1;background:white;border:1px solid #e8e4f1;border-radius:17px;box-shadow:0 30px 90px #37216b20;overflow:hidden;text-align:left}
+.preview-top{height:49px;border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 17px;gap:7px}
+.circle{height:9px;width:9px;border-radius:50%;background:#e4e0eb}
+.preview-body{display:grid;grid-template-columns:175px 1fr;min-height:340px}
+.preview-side{background:#fcfbff;border-right:1px solid var(--border);padding:22px 14px}
+.preview-brand{font-weight:800;font-size:14px;margin-bottom:28px}
+.preview-menu{padding:11px;border-radius:8px;font-size:11px;color:#77738c;margin-bottom:5px}
+.preview-menu.active{background:#eee9ff;color:var(--purple);font-weight:700}
+.preview-main{padding:25px}
+.preview-heading{font-size:17px;font-weight:800;margin-bottom:5px}
+.preview-sub{font-size:10px;color:#9691a4}
+.mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0}
+.mini-card{border:1px solid var(--border);border-radius:10px;padding:14px}
+.mini-card small{font-size:10px;color:#888397}
+.mini-card strong{display:block;font-size:22px;margin-top:7px}
+.mini-card em{font-style:normal;color:#159b70;font-size:9px}
+.preview-lower{display:grid;grid-template-columns:1.2fr 1fr;gap:12px}
+.mini-panel{border:1px solid var(--border);border-radius:10px;padding:15px;min-height:115px}
+.mini-panel b{font-size:11px}
+.bars{height:65px;display:flex;align-items:end;gap:9px;margin-top:12px}
+.bars i{display:block;flex:1;border-radius:4px 4px 0 0;background:linear-gradient(#a68aff,#7047eb)}
+.pipeline{display:flex;gap:5px;margin-top:17px}
+.pipeline i{height:12px;flex:1;border-radius:4px;background:#eee9ff}
+.pipeline i:nth-child(2){background:#b9a6ff}
+.pipeline i:nth-child(3){background:#7047eb}
+.pipeline i:nth-child(4){background:#d8d2e8}
+.section{padding:90px 24px;max-width:1180px;margin:auto}
+.section-head{text-align:center;max-width:650px;margin:0 auto 45px}
+.kicker{text-transform:uppercase;color:var(--purple);font-size:11px;letter-spacing:1.6px;font-weight:800}
+.section h2{font-family:Manrope,sans-serif;font-size:clamp(30px,4vw,43px);letter-spacing:-1.5px;margin:13px 0}
+.section-head p,.feature-card p{color:var(--muted);line-height:1.7;font-size:14px}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.feature-card{padding:27px;border:1px solid var(--border);border-radius:15px;background:white;transition:.2s}
+.feature-card:hover{transform:translateY(-4px);box-shadow:0 15px 35px #33205d0c}
+.feature-icon{height:43px;width:43px;display:grid;place-items:center;border-radius:12px;background:#f0ebff;font-size:20px;margin-bottom:20px}
+.feature-card h3{font-size:16px;margin-bottom:9px}
+.feature-card p{font-size:13px}
+.how{background:var(--bg);max-width:none}
+.how-inner{max-width:1180px;margin:auto}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:25px}
+.step{text-align:center;padding:22px}
+.step-number{height:42px;width:42px;border-radius:50%;background:#eee8ff;color:var(--purple);display:grid;place-items:center;font-weight:800;margin:0 auto 17px}
+.step h3{font-size:16px;margin-bottom:8px}
+.step p{font-size:13px;color:var(--muted);line-height:1.7}
+.cta{padding:75px 24px;text-align:center;background:linear-gradient(120deg,#5531c9,#8056ef);color:white}
+.cta h2{font-family:Manrope,sans-serif;font-size:clamp(30px,4vw,43px);letter-spacing:-1.5px;margin-bottom:14px}
+.cta p{color:#e4dcff;font-size:14px;margin-bottom:25px}
+.cta .btn{background:white;color:var(--purple)}
+.footer{padding:27px 24px;max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;color:#888397;font-size:12px}
+.footer strong{color:var(--ink)}
+@media(max-width:760px){
+ .nav{height:68px}.nav-links{display:none}.nav-actions{gap:10px}.nav-actions .login{display:none}
+ .hero{padding:65px 18px 55px}h1{letter-spacing:-2px}
+ .preview-body{grid-template-columns:1fr}.preview-side{display:none}.preview-main{padding:15px}
+ .mini-stats{gap:6px}.mini-card{padding:9px}.mini-card strong{font-size:18px}
+ .features,.steps{grid-template-columns:1fr}.section{padding:65px 20px}
+ .preview-lower{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<header class="nav">
+ <a class="logo" href="#"><span class="logo-icon">✓</span> JobTrack</a>
+ <nav class="nav-links">
+  <a href="#features">Features</a>
+  <a href="#how">How it works</a>
+  <a href="#about">About</a>
+ </nav>
+ <div class="nav-actions">
+  <a class="login" href="index.html">Log in</a>
+  <a class="btn btn-primary" href="index.html">Open JobTrack ↗</a>
+ </div>
+</header>
+
+<main>
+<section class="hero">
+ <div class="eyebrow"><span class="dot"></span> YOUR JOB SEARCH, SIMPLIFIED</div>
+ <h1>Every opportunity.<br><span class="gradient">One clear direction.</span></h1>
+ <p class="hero-copy">Bring your job applications, interviews and follow-ups into one organized workspace. Spend less time managing your search and more time moving forward.</p>
+ <div class="hero-buttons">
+  <a class="btn btn-primary" href="index.html">Get started — it's free ↗</a>
+  <a class="btn btn-light" href="#features">Explore features</a>
+ </div>
+ <p class="hero-note">No payment required to get started · Your applications stay in your browser</p>
+
+ <div class="preview-wrap">
+  <div class="preview-glow"></div>
+  <div class="dashboard-preview">
+   <div class="preview-top"><span class="circle"></span><span class="circle"></span><span class="circle"></span></div>
+   <div class="preview-body">
+    <aside class="preview-side">
+     <div class="preview-brand">✓ JobTrack</div>
+     <div class="preview-menu active">▦ Dashboard</div>
+     <div class="preview-menu">▤ Applications</div>
+     <div class="preview-menu">◷ Follow-ups</div>
+     <div class="preview-menu">◈ Insights</div>
+    </aside>
+    <div class="preview-main">
+     <div class="preview-heading">Your job search at a glance</div>
+     <div class="preview-sub">A clear view of your career progress</div>
+     <div class="mini-stats">
+      <div class="mini-card"><small>Total applications</small><strong>24</strong><em>Applications tracked</em></div>
+      <div class="mini-card"><small>Interviews</small><strong>08</strong><em>Keep moving forward</em></div>
+      <div class="mini-card"><small>Offers</small><strong>03</strong><em>Opportunities ahead</em></div>
+     </div>
+     <div class="preview-lower">
+      <div class="mini-panel"><b>Application activity</b><div class="bars"><i style="height:35%"></i><i style="height:60%"></i><i style="height:45%"></i><i style="height:85%"></i><i style="height:55%"></i><i style="height:95%"></i><i style="height:72%"></i></div></div>
+      <div class="mini-panel"><b>Application pipeline</b><div class="pipeline"><i></i><i></i><i></i><i></i></div><div class="preview-sub" style="margin-top:12px">Applied · Interview · Offer · Rejected</div></div>
+     </div>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="section" id="features">
+ <div class="section-head">
+  <span class="kicker">Everything in one place</span>
+  <h2>A smarter way to manage your job search.</h2>
+  <p>All the essential tools to stay organized, keep track of progress and make every application count.</p>
+ </div>
+ <div class="features">
+  <article class="feature-card"><div class="feature-icon">▤</div><h3>Application tracking</h3><p>Keep company names, roles, application dates, links and notes organized in one workspace.</p></article>
+  <article class="feature-card"><div class="feature-icon">◷</div><h3>Follow-up reminders</h3><p>Keep an eye on upcoming follow-ups so important opportunities don't slip through the cracks.</p></article>
+  <article class="feature-card"><div class="feature-icon">▥</div><h3>Progress insights</h3><p>See your application pipeline and understand how your job search is progressing.</p></article>
+  <article class="feature-card"><div class="feature-icon">✎</div><h3>Notes for every opportunity</h3><p>Save useful details and reminders for each company and role you apply to.</p></article>
+  <article class="feature-card"><div class="feature-icon">⇅</div><h3>CSV import and export</h3><p>Move your application records in and out with spreadsheet-friendly CSV files.</p></article>
+  <article class="feature-card"><div class="feature-icon">⌘</div><h3>Simple and focused</h3><p>A clean workspace designed to help you focus on your next career opportunity.</p></article>
+ </div>
+</section>
+
+<section class="section how" id="how">
+ <div class="how-inner">
+  <div class="section-head">
+   <span class="kicker">Simple by design</span>
+   <h2>From application to opportunity.</h2>
+   <p>Get organized in three straightforward steps.</p>
+  </div>
+  <div class="steps">
+   <div class="step"><div class="step-number">01</div><h3>Add your applications</h3><p>Record the roles and companies you are interested in or have already applied to.</p></div>
+   <div class="step"><div class="step-number">02</div><h3>Track every update</h3><p>Update statuses, save notes and keep upcoming follow-ups visible.</p></div>
+   <div class="step"><div class="step-number">03</div><h3>Move forward with clarity</h3><p>Review your progress and stay focused on the opportunities ahead.</p></div>
+  </div>
+ </div>
+</section>
+
+<section class="section" id="about">
+ <div class="section-head">
+  <span class="kicker">Built for your next step</span>
+  <h2>Your career journey deserves a clear workspace.</h2>
+  <p>Whether you're applying for your first internship or exploring your next role, JobTrack helps bring your search into focus.</p>
+ </div>
+</section>
+
+<section class="cta">
+ <h2>Make your next move count.</h2>
+ <p>Start organizing your job search with JobTrack.</p>
+ <a class="btn" href="index.html">Open JobTrack — Free ↗</a>
+</section>
+</main>
+
+<footer class="footer">
+ <span><strong>✓ JobTrack</strong> by LocalKit Studio</span>
+ <span>Organize your search. Focus on your future.</span>
+ <span>© 2026 LocalKit Studio</span>
+</footer>
+</body>
+</html>
+
